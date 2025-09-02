@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form { display: inline; }
+        button { background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        a { color: #007bff; text-decoration: none; margin-left: 15px; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete the service <strong>"{{ service.name }}"</strong> from <strong>{{ service.facility.name }}</strong>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+    </form>
+    <a href="{% url 'services:detail' service.pk %}">Cancel</a>
+</body>
+</html>

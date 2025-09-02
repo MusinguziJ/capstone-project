@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ service.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        p { line-height: 1.6; }
+        a { color: #007bff; text-decoration: none; margin-right: 15px; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>{{ service.name }}</h1>
+    <p><strong>Facility:</strong> {{ service.facility.name }}</p>
+    <p><strong>Description:</strong> {{ service.description }}</p>
+    <p><strong>Category:</strong> {{ service.get_category_display }}</p>
+    <p><strong>Skill Type:</strong> {{ service.get_skill_type_display }}</p>
+
+    <br>
+    <a href="{% url 'services:update' service.pk %}">Edit this Service</a>
+    <a href="{% url 'services:delete' service.pk %}">Delete this Service</a>
+    <a href="{% url 'services:list' %}">← Back to All Services</a>
+</body>
+</html>

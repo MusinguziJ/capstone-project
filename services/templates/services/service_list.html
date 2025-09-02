@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Services</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        a { color: #007bff; text-decoration: none; margin-right: 10px; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>All Services</h1>
+    <a href="{% url 'services:create' %}">➕ Add New Service</a>
+
+    {% if services %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Facility</th>
+                <th>Category</th>
+                <th>Skill Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.facility.name }}</td>
+                <td>{{ service.get_category_display }}</td>
+                <td>{{ service.get_skill_type_display }}</td>
+                <td>
+                    <a href="{% url 'services:detail' service.pk %}">View</a>
+                    <a href="{% url 'services:update' service.pk %}">Edit</a>
+                    <a href="{% url 'services:delete' service.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No services are available yet. <a href="{% url 'services:create' %}">Create the first one!</a></p>
+    {% endif %}
+</body>
+</html>
