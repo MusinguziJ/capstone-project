@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-<!-- This will put "Services - Capstone" in the browser tab -->
-{% block title %}Services{% endblock %}
+{% block title %}Services | Capstone Manager{% endblock %}
 
-<!-- This content will be injected into the 'container' div in base.html -->
 {% block content %}
-<h1 class="mb-4">All Services</h1>
-<a class="btn btn-primary mb-4" href="{% url 'services:create' %}">➕ Add New Service</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>All Services</h1>
+    <a class="btn btn-primary" href="{% url 'services:create' %}">➕ Add New Service</a>
+</div>
 
 {% if services %}
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Facility</th>
-                <th scope="col">Category</th>
-                <th scope="col">Skill Type</th>
-                <th scope="col" class="text-center">Actions</th>
+                <th>Name</th>
+                <th>Facility</th>
+                <th>Category</th>
+                <th>Skill Type</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +25,12 @@
             <tr>
                 <td>{{ service.name }}</td>
                 <td>{{ service.facility.name }}</td>
-                <td><span class="badge bg-info text-dark">{{ service.get_category_display }}</span></td>
+                <td><span class="badge bg-info">{{ service.get_category_display }}</span></td>
                 <td><span class="badge bg-secondary">{{ service.get_skill_type_display }}</span></td>
-                <td class="text-center">
-                    <a class="btn btn-sm btn-outline-primary" href="{% url 'services:detail' service.pk %}" title="View">👁️</a>
-                    <a class="btn btn-sm btn-outline-success" href="{% url 'services:update' service.pk %}" title="Edit">✏️</a>
-                    <a class="btn btn-sm btn-outline-danger" href="{% url 'services:delete' service.pk %}" title="Delete">🗑️</a>
+                <td>
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'services:detail' service.pk %}">View</a>
+                    <a class="btn btn-sm btn-outline-success" href="{% url 'services:update' service.pk %}">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'services:delete' service.pk %}">Delete</a>
                 </td>
             </tr>
             {% endfor %}
@@ -39,10 +39,7 @@
 </div>
 {% else %}
     <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading">No Services Found</h4>
-        <p>No services have been added to the system yet.</p>
-        <hr>
-        <a href="{% url 'services:create' %}" class="btn btn-info">Create the First Service</a>
+        No services are available yet. <a href="{% url 'services:create' %}" class="alert-link">Create the first one!</a>
     </div>
 {% endif %}
 {% endblock %}

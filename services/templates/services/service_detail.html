@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ service.name }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        p { line-height: 1.6; }
-        a { color: #007bff; text-decoration: none; margin-right: 15px; }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <h1>{{ service.name }}</h1>
-    <p><strong>Facility:</strong> {{ service.facility.name }}</p>
-    <p><strong>Description:</strong> {{ service.description }}</p>
-    <p><strong>Category:</strong> {{ service.get_category_display }}</p>
-    <p><strong>Skill Type:</strong> {{ service.get_skill_type_display }}</p>
+{% extends "base.html" %}
 
-    <br>
-    <a href="{% url 'services:update' service.pk %}">Edit this Service</a>
-    <a href="{% url 'services:delete' service.pk %}">Delete this Service</a>
-    <a href="{% url 'services:list' %}">← Back to All Services</a>
-</body>
-</html>
+{% block title %}{{ service.name }} | Details{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h4 mb-0">Service Details</h2>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Service Name:</dt>
+                    <dd class="col-sm-9">{{ service.name }}</dd>
+
+                    <dt class="col-sm-3">Facility:</dt>
+                    <dd class="col-sm-9">{{ service.facility.name }}</dd>
+
+                    <dt class="col-sm-3">Description:</dt>
+                    <dd class="col-sm-9">{{ service.description }}</dd>
+
+                    <dt class="col-sm-3">Category:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-info">{{ service.get_category_display }}</span></dd>
+
+                    <dt class="col-sm-3">Skill Type:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-secondary">{{ service.get_skill_type_display }}</span></dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'services:update' service.pk %}" class="btn btn-outline-success">Edit</a>
+                    <a href="{% url 'services:delete' service.pk %}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{% url 'services:list' %}" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
