@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ item.name }}{% endblock %}
+{% block content %}
+<h1>{{ item.name }}</h1>
+<p><strong>Type:</strong> {{ item.facility_type }}</p>
+<p><strong>Location:</strong> {{ item.location }}</p>
+<p>{{ item.description }}</p>
+
+<a href="{% url 'facility_edit' item.pk %}" class="btn btn-outline-secondary">Edit</a>
+<a href="{% url 'facility_list' %}" class="btn btn-link">Back</a>
+{% endblock %}
