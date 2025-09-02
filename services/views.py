@@ -1,6 +1,7 @@
+# services/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Service
-from .forms import ServiceForm  # We'll create this form next
+from .forms import ServiceForm
 
 def service_list(request):
     """Read: List all services"""
@@ -18,7 +19,7 @@ def service_create(request):
         form = ServiceForm(request.POST)
         if form.is_valid():
             new_service = form.save()
-            return redirect('services:detail', pk=new_service.pk) # Redirect to the new service's page
+            return redirect('services:detail', pk=new_service.pk)
     else:
         form = ServiceForm()
     return render(request, 'services/service_form.html', {'form': form, 'title': 'Create New Service'})
