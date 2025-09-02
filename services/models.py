@@ -1,16 +1,7 @@
 # services/models.py
 from django.db import models
+from facilities.models import Facility 
 
-# --- PLACEHOLDER MODEL FOR TESTING - REMOVE LATER ---
-# This is a temporary model so we can work without the real 'facilities' app.
-# TODO: REMOVE THIS AFTER THE REAL 'FACILITIES' APP IS CREATED BY ANOTHER TEAMMATE
-class Facility(models.Model):
-    name = models.CharField(max_length=200)
-    location = models.CharField(max_length=200, blank=True)  # 'blank=True' makes it optional in forms
-
-    def __str__(self):
-        return self.name
-# --- END PLACEHOLDER MODEL ---
 
 # Your actual Service model starts here
 class Service(models.Model):

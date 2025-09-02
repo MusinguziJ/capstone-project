@@ -19,12 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('services/', include('services.urls')),
-=======
-    path('facilities/', include('facilities.urls')),
-    path('', include('facilities.urls')),  # optional: make facilities home
->>>>>>> origin/facilities-module
+    path('services/', include('services.urls')),      # Your route
+    path('facilities/', include('facilities.urls')),  # Teammate's route
+    path('', include('facilities.urls')),             # Teammate's home route
 ]
 
 
