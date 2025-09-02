@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'services',
     'participants',
     'programs',
+    'projects',
 ]
 
 MIDDLEWARE = [

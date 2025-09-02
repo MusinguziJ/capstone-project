@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} | Details{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Project Details Column -->
+    <div class="col-md-7">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h4 mb-0">Project Details</h2>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Project Title:</dt>
+                    <dd class="col-sm-9">{{ project.title }}</dd>
+
+                    <dt class="col-sm-3">Program:</dt>
+                    <dd class="col-sm-9">{{ project.program.name }}</dd>
+
+                    <dt class="col-sm-3">Facility:</dt>
+                    <dd class="col-sm-9">{{ project.facility.name }}</dd>
+
+                    <dt class="col-sm-3">Nature of Project:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-info">{{ project.get_nature_of_project_display }}</span></dd>
+
+                    <dt class="col-sm-3">Description:</dt>
+                    <dd class="col-sm-9">{{ project.description }}</dd>
+
+                    <dt class="col-sm-3">Innovation Focus:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-warning text-dark">{{ project.get_innovation_focus_display }}</span></dd>
+
+                    <dt class="col-sm-3">Prototype Stage:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-secondary">{{ project.get_prototype_stage_display }}</span></dd>
+
+                    {% if project.testing_requirements %}
+                    <dt class="col-sm-3">Testing Requirements:</dt>
+                    <dd class="col-sm-9">{{ project.testing_requirements }}</dd>
+                    {% endif %}
+
+                    {% if project.commercialization_plan %}
+                    <dt class="col-sm-3">Commercialization Plan:</dt>
+                    <dd class="col-sm-9">{{ project.commercialization_plan }}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Participants Management Column -->
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h5 mb-0">Team Members</h3>
+            </div>
+            <div class="card-body">
+                <!-- List of Assigned Participants -->
+                {% if assigned_participants %}
+                <div class="mb-3">
+                    <h6>Current Team:</h6>
+                    <ul class="list-group">
+                        {% for assignment in assigned_participants %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ assignment.participant.full_name }}</strong>
+                                <br>
+                                <small class="text-muted">
+                                    {{ assignment.get_role_on_project_display }} • 
+                                    {{ assignment.get_skill_role_display }}
+                                </small>
+                            </div>
+                            <form method="post" action="{% url 'projects:remove_participant' project.pk assignment.participant.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this team member?')">Remove</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <p class="text-muted">No team members assigned yet.</p>
+                {% endif %}
+
+                <!-- Form to Add New Participant -->
+                {% if available_participants %}
+                <h6>Add Team Member:</h6>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_participant" value="true">
+                    
+                    <div class="mb-2">
+                        <label class="form-label">Participant</label>
+                        <select name="participant" class="form-select" required>
+                            <option value="">Select a participant...</option>
+                            {% for participant in available_participants %}
+                            <option value="{{ participant.pk }}">{{ participant.full_name }} ({{ participant.email }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Role</label>
+                            <select name="role_on_project" class="form-select" required>
+                                <option value="">Select role...</option>
+                                {% for value, display in form.fields.role_on_project.choices %}
+                                <option value="{{ value }}">{{ display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Skill Role</label>
+                            <select name="skill_role" class="form-select" required>
+                                <option value="">Select skill role...</option>
+                                {% for value, display in form.fields.skill_role.choices %}
+                                <option value="{{ value }}">{{ display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-sm">Add to Project</button>
+                </form>
+                {% else %}
+                <div class="alert alert-info mt-3">
+                    <small>All available participants are already assigned to this project.</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex gap-2 mt-3">
+    <a href="{% url 'projects:update' project.pk %}" class="btn btn-outline-success">Edit Project</a>
+    <a href="{% url 'projects:delete' project.pk %}" class="btn btn-outline-danger">Delete Project</a>
+    <a href="{% url 'projects:list' %}" class="btn btn-outline-secondary">Back to List</a>
+</div>
+{% endblock %}

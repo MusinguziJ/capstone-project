@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | Capstone Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>All Projects</h1>
+    <a class="btn btn-primary" href="{% url 'projects:create' %}">➕ Add New Project</a>
+</div>
+
+{% if projects %}
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Program</th>
+                <th>Facility</th>
+                <th>Nature</th>
+                <th>Innovation Focus</th>
+                <th>Stage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.program.name }}</td>
+                <td>{{ project.facility.name }}</td>
+                <td><span class="badge bg-info">{{ project.get_nature_of_project_display }}</span></td>
+                <td><span class="badge bg-warning text-dark">{{ project.get_innovation_focus_display }}</span></td>
+                <td><span class="badge bg-secondary">{{ project.get_prototype_stage_display }}</span></td>
+                <td>
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'projects:detail' project.pk %}">View</a>
+                    <a class="btn btn-sm btn-outline-success" href="{% url 'projects:update' project.pk %}">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'projects:delete' project.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        No projects are available yet. <a href="{% url 'projects:create' %}" class="alert-link">Create the first one!</a>
+    </div>
+{% endif %}
+{% endblock %}
