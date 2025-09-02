@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ program.name }} | Details{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h4 mb-0">Program Details</h2>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Program Name:</dt>
+                    <dd class="col-sm-9">{{ program.name }}</dd>
+
+                    <dt class="col-sm-3">Description:</dt>
+                    <dd class="col-sm-9">{{ program.description }}</dd>
+
+                    <dt class="col-sm-3">National Alignment:</dt>
+                    <dd class="col-sm-9">{{ program.national_alignment }}</dd>
+
+                    <dt class="col-sm-3">Focus Area:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-info">{{ program.get_focus_areas_display }}</span></dd>
+
+                    <dt class="col-sm-3">Phase:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-secondary">{{ program.get_phases_display }}</span></dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'programs:update' program.pk %}" class="btn btn-outline-success">Edit</a>
+                    <a href="{% url 'programs:delete' program.pk %}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{% url 'programs:list' %}" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

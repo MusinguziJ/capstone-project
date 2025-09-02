@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if title %}{{ title }}{% else %}Program Form{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h4 mb-0">
+                    {% if title %}{{ title }}{% else %}Create/Edit Program{% endif %}
+                </h2>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {{ form.as_p }}
+
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary">Save Program</button>
+                        <a href="{% url 'programs:list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
