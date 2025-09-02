@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Project, ProjectParticipant
 from .forms import ProjectForm, ProjectParticipantForm
 from participants.models import Participant
+from django.contrib.auth.decorators import login_required
 
 def project_list(request):
     projects = Project.objects.all().select_related('program', 'facility')
@@ -74,3 +75,14 @@ def remove_participant(request, project_pk, participant_pk):
         'project': project,
         'participant': participant
     })
+
+
+@login_required
+def outcomes_dashboard(request):
+    """
+    View for displaying project outcomes dashboard
+    """
+    context = {
+        'page_title': 'Project Outcomes Dashboard'
+    }
+    return render(request, 'projects/outcomes_dashboard.html', context)

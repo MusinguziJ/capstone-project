@@ -9,5 +9,6 @@ urlpatterns = [
     path('new/', views.project_create, name='create'),
     path('<int:pk>/edit/', views.project_update, name='update'),
     path('<int:pk>/delete/', views.project_delete, name='delete'),
-    path('<int:project_pk>/remove-participant/<int:participant_pk>/', views.remove_participant, name='remove_participant')
+    path('<int:project_pk>/remove-participant/<int:participant_pk>/', views.remove_participant, name='remove_participant'),  # Added missing comma here
+    path('outcomes/', views.outcomes_dashboard, name='outcomes_dashboard'),
 ]
