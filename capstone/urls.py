@@ -16,12 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    # App routes
     path('facilities/', include('facilities.urls')),
-    path('', include('facilities.urls')),  # optional: make facilities home
+    path('equipment/', include('equipment.urls')),   # 👈 add this line
+    path('', include('facilities.urls')),  # optional: make facilities the home page
 ]
+
+# Media files serving (for development only)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 
 
