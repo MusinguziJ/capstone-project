@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ participant.full_name }} | Details{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h4 mb-0">Participant Details</h2>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Full Name:</dt>
+                    <dd class="col-sm-9">{{ participant.full_name }}</dd>
+
+                    <dt class="col-sm-3">Email:</dt>
+                    <dd class="col-sm-9">{{ participant.email }}</dd>
+
+                    <dt class="col-sm-3">Affiliation:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-info">{{ participant.get_affiliation_display }}</span></dd>
+
+                    <dt class="col-sm-3">Specialization:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-secondary">{{ participant.get_specialization_display }}</span></dd>
+
+                    <dt class="col-sm-3">Cross-Skill Trained:</dt>
+                    <dd class="col-sm-9">
+                        {% if participant.cross_skill_trained %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">No</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">Institution:</dt>
+                    <dd class="col-sm-9"><span class="badge bg-primary">{{ participant.get_institution_display }}</span></dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'participants:update' participant.pk %}" class="btn btn-outline-success">Edit</a>
+                    <a href="{% url 'participants:delete' participant.pk %}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{% url 'participants:list' %}" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Delete | Capstone Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h4 mb-0 text-danger">Confirm Deletion</h2>
+            </div>
+            <div class="card-body text-center">
+                <p class="lead">Are you sure you want to delete the participant:</p>
+                <h4 class="text-danger">{{ participant.full_name }}</h4>
+                <p class="text-muted">{{ participant.email }}</p>
+
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a href="{% url 'participants:detail' participant.pk %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

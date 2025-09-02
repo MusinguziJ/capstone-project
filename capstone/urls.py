@@ -22,6 +22,7 @@ urlpatterns = [
     path('services/', include('services.urls')),      # Your route
     path('facilities/', include('facilities.urls')),  # Teammate's route
     path('', include('facilities.urls')),             # Teammate's home route
+    path('participants/', include('participants.urls')),  # New route for participants
 ]
 
 
