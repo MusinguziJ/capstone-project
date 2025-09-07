@@ -36,3 +36,4 @@ def facility_delete(request, pk):
         item.delete()
         return redirect('facility_list')
     return render(request, 'facilities/confirm_delete.html', {'item': item})
+
