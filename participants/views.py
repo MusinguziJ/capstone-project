@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Participant
 from .forms import ParticipantForm
+from django.http import HttpResponse  # ← ADD THIS IMPORT
 
 def participant_list(request):
     participants = Participant.objects.all()
@@ -11,14 +12,35 @@ def participant_detail(request, pk):
     return render(request, 'participants/participant_detail.html', {'participant': participant})
 
 def participant_create(request):
+    print("=== DEBUG: participant_create view called ===")
+    print(f"Request method: {request.method}")
+    
     if request.method == 'POST':
+        print("DEBUG: POST request received")
         form = ParticipantForm(request.POST)
+        print(f"DEBUG: Form is valid: {form.is_valid()}")
+        
         if form.is_valid():
-            form.save()
+            print("DEBUG: Form is valid - saving participant")
+            participant = form.save()
+            print(f"DEBUG: Participant saved: {participant}")
             return redirect('participants:list')
+        else:
+            print(f"DEBUG: Form errors: {form.errors}")
     else:
+        print("DEBUG: GET request - showing empty form")
         form = ParticipantForm()
-    return render(request, 'participants/participant_form.html', {'form': form, 'title': 'Add New Participant'})
+    
+    print("DEBUG: About to render template...")
+    
+    # Test if template rendering works
+    try:
+        response = render(request, 'participants/participant_form.html', {'form': form, 'title': 'Add New Participant'})
+        print(f"DEBUG: Template rendered successfully, content length: {len(response.content)}")
+        return response
+    except Exception as e:
+        print(f"DEBUG: Template rendering failed: {e}")
+        return HttpResponse(f"Template error: {e}")
 
 def participant_update(request, pk):
     participant = get_object_or_404(Participant, pk=pk)
