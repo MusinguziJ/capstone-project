@@ -26,7 +26,7 @@
         <td>{{ item.support_phase }}</td>
         <td>{{ item.facility.name }}</td>
         <td>
-          <a href="{% url 'equipment_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <a href="{% url 'equipment_update' item.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
           <a href="{% url 'equipment_delete' item.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
         </td>
       </tr>
