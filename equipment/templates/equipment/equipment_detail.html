@@ -1,0 +1,11 @@
+<!-- equipment/templates/equipment/equipment_detail.html -->
+<h1>Equipment Details</h1>
+<h2>{{ equipment.name }}</h2>
+<p>Description: {{ equipment.description }}</p>
+<p>Serial Number: {{ equipment.serial_number }}</p>
+<p>Status: {{ equipment.status }}</p>
+<p>Location: {{ equipment.location }}</p>
+
+<a href="{% url 'equipment_list' %}">Back to List</a>
+<a href="{% url 'equipment_update' equipment.pk %}">Edit</a>
+<a href="{% url 'equipment_delete' equipment.pk %}">Delete</a>

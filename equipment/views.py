@@ -7,6 +7,11 @@ def equipment_list(request):
     items = Equipment.objects.all().order_by('name')
     return render(request, 'equipment/equipment_list.html', {'items': items})
 
+# View equipment details - ADD THIS FUNCTION
+def equipment_detail(request, pk):
+    equipment = get_object_or_404(Equipment, pk=pk)
+    return render(request, 'equipment/equipment_detail.html', {'equipment': equipment})
+
 # Create new equipment
 def equipment_create(request):
     if request.method == 'POST':
