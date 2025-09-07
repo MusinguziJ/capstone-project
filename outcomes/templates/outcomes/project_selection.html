@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Select Project for Outcomes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Select a Project to View Outcomes</h1>
+
+    {% if projects %}
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description|truncatewords:30 }}</p>
+                    <div class="mb-2">
+                        <strong>Facility:</strong> {{ project.facility.name }}<br>
+                        <strong>Program:</strong> {{ project.program.name }}<br>
+                        <strong>Status:</strong> {{ project.get_prototype_stage_display }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'outcomes:list' project.id %}" class="btn btn-primary">
+                        View Outcomes
+                    </a>
+                    <a href="{% url 'outcomes:create' project.id %}" class="btn btn-success">
+                        Add Outcome
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No projects available. Please create a project first.
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'projects:list' %}" class="btn btn-secondary">
+            ← Back to Projects List
+        </a>
+    </div>
+</div>
+{% endblock %}
